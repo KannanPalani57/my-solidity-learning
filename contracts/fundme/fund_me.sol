@@ -21,10 +21,16 @@ interface AggregatorV3Interface {
 
 
 contract FundMe {
-
     // ETH/USD Price Feed Address Sepolia - 0x694AA1769357215DE4FAC081bf1f309aDC325306
 
     function getVersion() public view returns(uint256){
         return AggregatorV3Interface(0x694AA1769357215DE4FAC081bf1f309aDC325306).version();
+    }
+
+    function getPrice() public view returns (uint256) {
+     AggregatorV3Interface priceFeed =  AggregatorV3Interface(0x694AA1769357215DE4FAC081bf1f309aDC325306);
+        (, int256 answer,,,) = priceFeed.latestRoundData();
+        // ETH/USD rate in 18 digit
+        return uint256(answer * 10000000000);
     }
 }
